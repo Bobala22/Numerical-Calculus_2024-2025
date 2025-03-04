@@ -6,9 +6,12 @@ import numpy as np
 
 def find_machine_precision():
     u = 1.0
+    m = 0
     while 1.0 + u != 1.0:
-        u /= 2.0
-    return u * 2.0
+        m += 1
+        u = 10 ** -m
+    u = 10 ** -(m-1)
+    return u
 
 def check_addition_non_associativity(u):
     x = 1.0
@@ -31,7 +34,7 @@ def check_addition_non_associativity(u):
 
 def check_multiplication_non_associativity():
     print("\nVerificare neasociativitate înmulțire:")
-    for _ in range(10):
+    for _ in range(100):
         a = random.uniform(1e-10, 1e10)
         b = random.uniform(1e-10, 1e10)
         c = random.uniform(1e-10, 1e10)
