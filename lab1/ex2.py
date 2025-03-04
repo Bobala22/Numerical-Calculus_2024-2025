@@ -1,5 +1,3 @@
-import random
-
 import numpy as np
 
 
@@ -32,36 +30,45 @@ def check_addition_non_associativity(u):
     return left_sum, right_sum
 
 def check_multiplication_non_associativity():
-    print("\nVerificare neasociativitate înmulțire:")
-    for _ in range(100):
-        a = random.uniform(1e-10, 1e10)
-        b = random.uniform(1e-10, 1e10)
-        c = random.uniform(1e-10, 1e10)
-        
-        left_mult = (a * b) * c
-        right_mult = a * (b * c)
-        
-        if not np.isclose(left_mult, right_mult, rtol=1e-10):
-            print(f"Exemplu de neasociativitate:")
-            print(f"a = {a}")
-            print(f"b = {b}")
-            print(f"c = {c}")
-            print(f"(a * b) * c = {left_mult}")
-            print(f"a * (b * c) = {right_mult}")
-            print(f"Diferență absolută: {abs(left_mult - right_mult)}")
-            return True
+    x = 1.0e308 # f aprope de repr. maxima a unui nr in virgula mobila => cand inmultim cu 2, rezultatul va fi infinit (overflow)
+    y = 3.0      
+    z = 1.0e-300
     
-    print("Nu s-a găsit un exemplu de neasociativitate în 10 încercări.")
-    return False
+    left_product = (x * y) * z
+    right_product = x * (y * z)
+    
+    print("Verificare neasociativitate înmulțire:")
+    print(f"x = {x}")
+    print(f"y = {y}")
+    print(f"z = {z}")
+    print(f"(x * y) * z = {left_product}")
+    print(f"x * (y * z) = {right_product}")
+    print(f"Neasociativ: {left_product != right_product}") 
+
+    print()
+    print("Another example: ")
+    x = 1.234567e10
+    y = 1.234567e-5
+    z = 1.234567e-5
+
+    left_product = (x * y) * z
+    right_product = x * (y * z)
+    
+    print("Verificare neasociativitate înmulțire:")
+    print(f"x = {x}")
+    print(f"y = {y}")
+    print(f"z = {z}")
+    print(f"(x * y) * z = {left_product}")
+    print(f"x * (y * z) = {right_product}")
+    print(f"Neasociativ: {left_product != right_product}")
 
 def main():
-    # Găsește precizia mașină
     u = find_machine_precision()
+    print()
     
-    # Verifică neasociativitatea adunării
     check_addition_non_associativity(u)
+    print()
     
-    # Verifică neasociativitatea înmulțirii
     check_multiplication_non_associativity()
 
 if __name__ == "__main__":
