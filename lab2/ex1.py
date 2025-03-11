@@ -87,4 +87,5 @@ def ecuations_solver_U(A, Y):
 
 #3------------------------------------
 Y = ecuations_solver_L(A, B)
-print(ecuations_solver_U(A, Y))
+X = ecuations_solver_U(A, Y)
+print(X)
