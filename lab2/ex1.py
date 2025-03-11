@@ -63,8 +63,6 @@ def ecuations_solver_U(A, Y):
                 s += D[j] * X[j]
             else:
                 s += A[i][j] * X[j]
-            print(i)
-            print()
         X[i] = (Y[i] - s) / D[i]
     return X
 
@@ -88,8 +86,5 @@ def ecuations_solver_U(A, Y):
 # print(determinant(A))
 
 #3------------------------------------
-
 Y = ecuations_solver_L(A, B)
-#print(Y)
-print()
 print(ecuations_solver_U(A, Y))
