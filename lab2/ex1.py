@@ -1,5 +1,4 @@
 import copy
-
 import numpy as np
 
 A = [
@@ -85,7 +84,24 @@ def calculate_residual_norm(A_init, X, B):
     
     return norm
 
+def calculate_first_norm(X, X_lib):
+    X_np = np.array(X)
+    X_lib_np = np.array(X_lib)
+
+    norm = np.linalg.norm(X_np - X_lib_np, ord=1)
+    return norm
+
+def calculate_second_norm(X, A_inv, B):
+    X_np = np.array(X)
+    A_inv_np = np.array(A_inv)
+    B_np = np.array(B)
+
+    AX = A_inv_np @ B_np
+    norm = np.linalg.norm(X_np - AX, ord=2)
+    return norm
+
 #1------------------------------------
+print("\nCalculating LU decomposition:\n")
 for i, row in enumerate(A):  
     for j in range(i + 1):  
         print(A[i][j], end=" ")
@@ -100,18 +116,19 @@ for i, row in enumerate(A):
         print(A[i][j], end=" ")
     print()
 #2------------------------------------
-print("Determinantul matricei A este: ", determinant(A))
+print("\nDeterminantul matricei A este: ", determinant(A))
 
 #3------------------------------------
+print("\nSolving ecuation with LU decomposition: ")
 Y = ecuations_solver_L(A, B)
-print("Y: ", Y)
+print("\nY: ", Y)
 X = ecuations_solver_U(A, Y)
 print("X: ", X)
 
 #4------------------------------------
-print("Residual norm: ", calculate_residual_norm(A_init, X, B))
+print("\nResidual norm: ", calculate_residual_norm(A_init, X, B))
 
-A_inv = np.linalg.inv(A)
+A_inv = np.linalg.inv(A_init)
 
 def solve_ecuation_with_lib(A, B):
     A_inv = np.linalg.inv(A)
@@ -120,5 +137,8 @@ def solve_ecuation_with_lib(A, B):
 
 
 X_lib = solve_ecuation_with_lib(A_init, B)
-print("Solving ecuation with python lib", X_lib)
-print("First norm with lib:", calculate_residual_norm(X, X_lib, np.array(1)))
+print("Solving ecuation with python lib: ", X_lib)
+print("First norm with lib: ", calculate_first_norm(X, X_lib))
+print("Second norm with lib: ", calculate_second_norm(X, A_inv, B))
+print()
+
