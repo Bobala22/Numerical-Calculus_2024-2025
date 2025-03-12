@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 
 A = [
@@ -6,7 +8,7 @@ A = [
     [6, 3, 12.5]
     ]
 
-A_init = A
+A_init = copy.deepcopy(A)
 
 D = [2, 3, 4] 
 
@@ -93,10 +95,10 @@ print()
 
 a_len = len(A)
 for i, row in enumerate(A):  
+    print(D[i], end=" ")
     for j in range(i + 1, len(A)):
         print(A[i][j], end=" ")
-    print() 
-
+    print()
 #2------------------------------------
 print("Determinantul matricei A este: ", determinant(A))
 
@@ -109,7 +111,14 @@ print("X: ", X)
 #4------------------------------------
 print("Residual norm: ", calculate_residual_norm(A_init, X, B))
 
+A_inv = np.linalg.inv(A)
 
-print("\n\nTestare")
-a =np.array([1, 2, 3])
-print(np.linalg.norm(a))
+def solve_ecuation_with_lib(A, B):
+    A_inv = np.linalg.inv(A)
+    X = A_inv @ B
+    return X
+
+
+X_lib = solve_ecuation_with_lib(A_init, B)
+print("Solving ecuation with python lib", X_lib)
+print("First norm with lib:", calculate_residual_norm(X, X_lib, np.array(1)))
