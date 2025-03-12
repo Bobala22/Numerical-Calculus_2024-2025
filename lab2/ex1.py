@@ -1,10 +1,12 @@
-
+import numpy as np
 
 A = [
     [4, 2, 3],
     [2, 7, 5.5],
     [6, 3, 12.5]
 ]
+
+A_init = A
 
 D = [2, 3, 4] 
 
@@ -67,7 +69,26 @@ def ecuations_solver_U(A, Y):
     return X
 
 
+def calculate_residual_norm(A_init, X, B):
+    # Convert to NumPy arrays for easier matrix operations
+    A_np = np.array(A_init)
+    X_np = np.array(X)
+    B_np = np.array(B)
+    
+    # Calculate A_init * X
+    AX = A_np @ X_np
+    
+    # Calculate residual vector
+    residual = AX - B_np
+    
+    # Calculate 2-norm
+    norm = np.linalg.norm(residual)
+    
+    return norm
 
+# Calculate and print the 2-norm
+residual_norm = calculate_residual_norm(A_init, X, B)
+print(f"||A_init * X - b||_2 = {residual_norm}")
 
 
 #1------------------------------------
