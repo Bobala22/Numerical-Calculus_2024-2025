@@ -71,5 +71,19 @@ for p in polynomials:
 print("Topul celor 8 polinoame:")
 for i in sorted(mse_errors, key=lambda x: x[1])[:8]:
     print(i[0].__name__, i[1])
-    
+
+time_top = {}
+print("\nCalculating the time each polynomial takes to compute 10000 values:")
+import time
+for p in polynomials:
+    start = time.time()
+    for x in random_numbers:
+        p(x)
+    end = time.time()
+    time_top[p.__name__] = end - start
+
+sorted_time = sorted(time_top.items(), key=lambda x: x[1])
+print("Topul celor 8 polinoame in functie de timp:")
+for i in sorted_time:
+    print(i[0], i[1])
 
