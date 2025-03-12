@@ -4,7 +4,7 @@ A = [
     [4, 2, 3],
     [2, 7, 5.5],
     [6, 3, 12.5]
-]
+    ]
 
 A_init = A
 
@@ -37,7 +37,7 @@ L = dividing_matrix_LU(A, D)
 #Determinant
 def determinant(A):
     n = len(A)
-    det = 1;
+    det = 1
     for i in range(n):
         det = det * A[i][i] * D[i]
     return det
@@ -70,43 +70,46 @@ def ecuations_solver_U(A, Y):
 
 
 def calculate_residual_norm(A_init, X, B):
-    # Convert to NumPy arrays for easier matrix operations
     A_np = np.array(A_init)
     X_np = np.array(X)
     B_np = np.array(B)
     
-    # Calculate A_init * X
+    # @ = inmultire de matrici in numpy
     AX = A_np @ X_np
     
-    # Calculate residual vector
     residual = AX - B_np
     
-    # Calculate 2-norm
     norm = np.linalg.norm(residual)
     
     return norm
 
-# Calculate and print the 2-norm
-residual_norm = calculate_residual_norm(A_init, X, B)
-print(f"||A_init * X - b||_2 = {residual_norm}")
-
-
 #1------------------------------------
-# for i, row in enumerate(A):  
-#     for j in range(i + 1):  
-#         print(A[i][j], end=" ")
-#     print() 
-# print()
-# a_len = len(A)
-# for i, row in enumerate(A):  
-#     for j in range(i + 1, len(A)):
-#         print(A[i][j], end=" ")
-#     print() 
+for i, row in enumerate(A):  
+    for j in range(i + 1):  
+        print(A[i][j], end=" ")
+    print() 
+
+print()
+
+a_len = len(A)
+for i, row in enumerate(A):  
+    for j in range(i + 1, len(A)):
+        print(A[i][j], end=" ")
+    print() 
 
 #2------------------------------------
-# print(determinant(A))
+print("Determinantul matricei A este: ", determinant(A))
 
 #3------------------------------------
 Y = ecuations_solver_L(A, B)
+print("Y: ", Y)
 X = ecuations_solver_U(A, Y)
-print(X)
+print("X: ", X)
+
+#4------------------------------------
+print("Residual norm: ", calculate_residual_norm(A_init, X, B))
+
+
+print("\n\nTestare")
+a =np.array([1, 2, 3])
+print(np.linalg.norm(a))
