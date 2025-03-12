@@ -1,17 +1,26 @@
 import copy
 import numpy as np
+import random
 
-A = [
-    [4, 2, 3],
-    [2, 7, 5.5],
-    [6, 3, 12.5]
-    ]
+# A = [
+#     [4, 2, 3],
+#     [2, 7, 5.5],
+#     [6, 3, 12.5]
+#     ]
+
+# D = [2, 3, 4] 
+
+# B = [21.6, 33.6, 51.6]
+
+n = 110
+
+A = [[random.uniform(1, 10) for _ in range(n)] for _ in range(n)]
+
+D = [random.uniform(1, 10) for _ in range(n)]
+
+B = [random.uniform(1, 10) for _ in range(n)]
 
 A_init = copy.deepcopy(A)
-
-D = [2, 3, 4] 
-
-B = [21.6, 33.6, 51.6]
 
 #Decomposition
 def dividing_matrix_LU(A, D):
