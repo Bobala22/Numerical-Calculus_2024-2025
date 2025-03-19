@@ -2,11 +2,11 @@ import copy
 
 import numpy as np
 
-A = [
-    [4, 2, 3],
-    [2, 7, 5.5],
-    [6, 3, 12.5]
-    ]
+eps = 1e-8
+
+A = [[4.0, 2.0, 3.0],
+    [2.0, 7.0, 5.5],
+    [6.0, 3.0, 12.5]]
 
 A_init = copy.deepcopy(A)
 
@@ -23,12 +23,16 @@ def dividing_matrix_LU(A, D):
             s = 0
             for k in range(col):
                 s += A[row][k] * A[k][col]
+            if abs(D[col]) < eps:
+                raise ZeroDivisionError(f"Division by zero encountered: D[{col}] = 0")
             A[row][col] = (A[row][col] - s) / D[col]
         
         for col in range(row + 1, n):
             s = 0
             for k in range(row):
                 s += A[row][k] * A[k][col]
+            if abs(A[row][row]) < eps:
+                raise ZeroDivisionError(f"Division by zero encountered: A[{row}][{row}]] = 0")
             A[row][col] = (A[row][col] - s) / A[row][row]
 
             
@@ -110,15 +114,11 @@ print("X: ", X)
 
 #4------------------------------------
 print("Residual norm: ", calculate_residual_norm(A_init, X, B))
-
 A_inv = np.linalg.inv(A)
-
 def solve_ecuation_with_lib(A, B):
     A_inv = np.linalg.inv(A)
     X = A_inv @ B
     return X
-
-
 X_lib = solve_ecuation_with_lib(A_init, B)
 print("Solving ecuation with python lib", X_lib)
 print("First norm with lib:", calculate_residual_norm(X, X_lib, np.array(1)))
