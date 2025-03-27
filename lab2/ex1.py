@@ -2,27 +2,27 @@ import copy
 import numpy as np
 import random
 
-# A = [
-#     [4, 2, 3],
-#     [2, 7, 5.5],
-#     [6, 3, 12.5]
-#     ]
+A = [
+    [4, 2, 3],
+    [2, 7, 5.5],
+    [6, 3, 12.5]
+    ]
 
-# D = [2, 3, 4] 
+D = [2, 3, 4] 
 
-# B = [21.6, 33.6, 51.6]
+B = [21.6, 33.6, 51.6]
 
-n = 110
+# n = 110
 
-A = [[random.uniform(1, 10) for _ in range(n)] for _ in range(n)]
+# A = [[random.uniform(1, 10) for _ in range(n)] for _ in range(n)]
 
-D = [random.uniform(1, 10) for _ in range(n)]
+# D = [random.uniform(1, 10) for _ in range(n)]
 
-B = [random.uniform(1, 10) for _ in range(n)]
+# B = [random.uniform(1, 10) for _ in range(n)]
 
 A_init = copy.deepcopy(A)
 
-#Decomposition
+# Decomposition
 def dividing_matrix_LU(A, D):
     n = len(A)
 
@@ -31,20 +31,28 @@ def dividing_matrix_LU(A, D):
             s = 0
             for k in range(col):
                 s += A[row][k] * A[k][col]
-            A[row][col] = (A[row][col] - s) / D[col]
+            try:
+                A[row][col] = (A[row][col] - s) / D[col]
+            except ZeroDivisionError:
+                print("Division by zero")
         
         for col in range(row + 1, n):
             s = 0
             for k in range(row):
                 s += A[row][k] * A[k][col]
-            A[row][col] = (A[row][col] - s) / A[row][row]
+            try: 
+                A[row][col] = (A[row][col] - s) / A[row][row]
+            except ZeroDivisionError:
+                print("Division by zero")
 
             
     return A
 
 L = dividing_matrix_LU(A, D)
+for row in A:
+    print(row)
 
-#Determinant
+# Determinant
 def determinant(A):
     n = len(A)
     det = 1
@@ -53,7 +61,7 @@ def determinant(A):
     return det
 
 
-#Ecuations solver
+# Ecuations solver
 def ecuations_solver_L(A, B):
     n = len(A)
     Y = [] * n
@@ -109,7 +117,7 @@ def calculate_second_norm(X, A_inv, B):
     norm = np.linalg.norm(X_np - AX, ord=2)
     return norm
 
-#1------------------------------------
+# 1------------------------------------
 print("\nCalculating LU decomposition:\n")
 for i, row in enumerate(A):  
     for j in range(i + 1):  
@@ -124,17 +132,17 @@ for i, row in enumerate(A):
     for j in range(i + 1, len(A)):
         print(A[i][j], end=" ")
     print()
-#2------------------------------------
+# 2------------------------------------
 print("\nDeterminantul matricei A este: ", determinant(A))
 
-#3------------------------------------
+# 3------------------------------------
 print("\nSolving ecuation with LU decomposition: ")
 Y = ecuations_solver_L(A, B)
 print("\nY: ", Y)
 X = ecuations_solver_U(A, Y)
 print("X: ", X)
 
-#4------------------------------------
+# 4------------------------------------
 print("\nResidual norm: ", calculate_residual_norm(A_init, X, B))
 
 A_inv = np.linalg.inv(A_init)
