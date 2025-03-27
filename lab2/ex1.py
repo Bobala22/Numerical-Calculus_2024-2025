@@ -151,8 +151,6 @@ def solve_ecuation_with_lib(A, B):
     A_inv = np.linalg.inv(A)
     X = A_inv @ B
     return X
-
-
 X_lib = solve_ecuation_with_lib(A_init, B)
 print("Solving ecuation with python lib: ", X_lib)
 print("First norm with lib: ", calculate_first_norm(X, X_lib))
